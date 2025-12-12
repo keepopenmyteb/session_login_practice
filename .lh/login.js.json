@@ -1,0 +1,18 @@
+{
+    "sourceFile": "login.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1765517280101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1765517280101,
+            "name": "Commit-0",
+            "content": "const form = document.querySelector(\"form\");\nconst idInput = document.querySelector(\"#user_id\");\nconst passwordInput = document.querySelector(\"#user_pw\");\n\nconst loginButton = document.querySelector(\"#login_btn\");\nconst logoutButton = document.querySelector(\"#logout_btn\");\n\nconst main = document.querySelector(\"main\");\nconst userName = document.querySelector(\"#user_name\");\nconst userDetail = document.querySelector(\"#user_info\");\n\naxios.defaults.withCredentials = true;\n\n// form의 기본 submit 값 초기화\nform.addEventListener(\"submit\", (e) => e.preventDefault());\n\n// 로그인 함수\nfunction login() {\n  const userId = idInput.value;\n  const userPassword = passwordInput.value;\n\n  return axios.post(\"http://localhost:3000\", { userId, userPassword });\n}\n\n// 로그아웃 함수\nfunction logout() {\n  return axios.delete(\"http://localhost:3000\");\n}\n\n// 유저 정보를 받아오는 함수\nfunction getUserInfo() {\n  return axios.get(\"http://localhost:3000\");\n}\n\n// 유저 정보를 렌더링 시키는 함수\nfunction renderUserInfo(userInfo) {\n  main.style.display = \"block\";\n  form.style.display = \"none\";\n  userName.textContent = userInfo.user_name;\n  userDetail.textContent = userInfo.user_info;\n}\n\n// 유저 정보를 숨기는 함수\nfunction renderLoginForm() {\n  main.style.display = \"none\";\n  form.style.display = \"block\";\n  userName.textContent = \"\";\n  userDetail.textContent = \"\";\n}\n\n// 로그인 버튼을 클릭하는 경우 post 요청 보낸 후 get 요청\nloginButton.onclick = () => {\n  login()\n    .then(() => getUserInfo())\n    .then((res) => renderUserInfo(res.data));\n};\n\n// 로그아웃 버튼을 클릭하는 경우\nlogoutButton.onclick = () => {\n  logout().then((res) => {\n    console.log(res);\n    renderLoginForm();\n  });\n};\n"
+        }
+    ]
+}
